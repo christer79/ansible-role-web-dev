@@ -1,0 +1,22 @@
+- name: Create yum repo file for mongodb
+  become: true
+  copy:
+    src: files/mongodb.repo
+    dest: /etc/yum.repos.d/mongodb.repo
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  tags:
+    - web-dev
+
+- name: Install yum-packages Web Development
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - npm
+    - mongodb-org
+    - asciidoctor
+  tags:
+    - web-dev
